@@ -36,4 +36,11 @@ class Estate extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    
+    // 不動産会社が所有者する物件
+    public function bukkens()
+    {
+        return $this->hasMany(Bukken::class);
+    }
 }

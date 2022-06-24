@@ -48,7 +48,7 @@ Route::namespace('Estate')->prefix('estate')->name('estate.')->group(function ()
     Route::middleware('auth:estate')->group(function () {
 
         // TOPページ
-        Route::resource('/', 'EstateController', ['only' => 'index']);
+        Route::resource('/', 'EstateController');
 
     });
 
