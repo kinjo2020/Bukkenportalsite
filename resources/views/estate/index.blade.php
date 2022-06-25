@@ -1,11 +1,13 @@
 @extends('layouts.estate.app')
 
 @section('content')
-<div class="mb-3 mx-auto text-center" style="width:800px">
-    <h1>物件管理</h1>
-</div>
-
-<div>
+<div class="mx-auto" style="width:800px">
+    <h1 class="mb-3 text-center">物件管理</h1>
+    <div class="mb-2 d-flex justify-content-end">
+        {{-- 新規物件作成リンク --}}
+        {!! link_to_route('estate.create', '新規物件作成', [], ['class' => 'btn btn-primary']) !!}
+    </div>
+    
     @if (count($bukkens) > 0)
         @foreach ($bukkens as $bukken)
         <div class="card mx-auto" style="width:800px">

@@ -1,0 +1,57 @@
+@extends('layouts.estate.app')
+
+@section('content')
+
+    <div class="mx-auto" style="width:800px">
+        
+        {{-- エラーメッセージ --}}
+        @if (count($errors) > 0)
+            <ul class="alert alert-danger" role="alert">
+                @foreach ($errors->all() as $error)
+                    <li class="ml-4">{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+    
+        <h1 class="text-center">新規物件作成ページ</h1>
+    
+        <div>
+            <div>
+                {!! Form::model($bukken, ['route' => 'estate.store']) !!}
+    
+                    <div class="form-group">
+                        {!! Form::label('name', '物件名:') !!}
+                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('kinds', 'カテゴリー:') !!}
+                        {!! Form::text('kinds', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('address', '住所:') !!}
+                        {!! Form::text('address', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('rent', '賃料:') !!}
+                        {!! Form::text('rent', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('management_fee', '管理費:') !!}
+                        {!! Form::text('management_fee', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('floor', '所在階:') !!}
+                        {!! Form::text('floor', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('floor_plan', '間取り:') !!}
+                        {!! Form::text('floor_plan', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('nearest_station', '最寄り駅:') !!}
+                        {!! Form::text('nearest_station', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('age', '築年数:') !!}
+                        {!! Form::text('age', null, ['class' => 'form-control']) !!}
+                    </div>
+    
+                    {!! Form::submit('作成', ['class' => 'btn btn-primary']) !!}
+    
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+@endsection

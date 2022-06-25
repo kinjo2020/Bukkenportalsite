@@ -19,12 +19,12 @@ class CreateBukkensTable extends Migration
             $table->string('kinds');
             $table->string('name');
             $table->string('address');
-            $table->integer('rent');
-            $table->integer('management_fee');
+            $table->string('rent');
+            $table->string('management_fee');
             $table->string('floor');
             $table->string('floor_plan');
             $table->string('nearest_station');
-            $table->integer('age');
+            $table->string('age');
             $table->timestamps();
             
             // 外部キー制約
