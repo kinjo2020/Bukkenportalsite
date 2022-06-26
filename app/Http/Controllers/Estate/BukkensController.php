@@ -74,7 +74,41 @@ class BukkensController extends Controller
             'age' => $request->age,
         ]);
 
-        // 前のURLへリダイレクトさせる
+        // 物件管理ページへリダイレクトさせる
         return redirect('/estate');
+    }
+    
+    public function show($id)
+    {
+        // idの物件を取得
+        $bukken = Bukken::findOrFail($id);
+        // dd($bukken);
+        
+        // 認証済みの不動産会社と物件idが同じ場合、詳細ページに遷移する
+        if (Auth::guard('estate')->id() === $bukken->estate_id)
+        {
+            return view('estate.show', [
+                'bukken' => $bukken,
+            ]);
+        } else
+        {
+            // それ以外は物件管理ページにリダイレクトさせる
+            return redirect('/estate');
+        }
+    }
+    
+    public function edit()
+    {
+        // 
+    }
+    
+    public function apdate()
+    {
+        // 
+    }
+    
+    public function destroy()
+    {
+        // 
     }
 }

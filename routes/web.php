@@ -48,7 +48,8 @@ Route::namespace('Estate')->prefix('estate')->name('estate.')->group(function ()
     Route::middleware('auth:estate')->group(function () {
 
         // TOPページ
-        Route::resource('/', 'BukkensController');
+        Route::get('/{id}', 'BukkensController@show')->where('id', '[0-9]+')->name('show');
+        Route::resource('/', 'BukkensController', ['only' => ['index', 'create', 'store']]);
 
     });
 
