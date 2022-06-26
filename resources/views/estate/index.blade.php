@@ -23,8 +23,11 @@
                 <p>住所：{{ $bukken->address }}</p>
                 <p>最寄り駅：{{ $bukken->nearest_station }}</p>
                 
-                {{-- 物件詳細詳細ページへのリンク --}}
+                {{-- 物件詳細ページへのリンク --}}
                 {!! link_to_route('estate.show', '詳細を見る', ['id' => $bukken->id]) !!}
+                
+                {{-- 物件情報編集ページへのリンク --}}
+                {!! link_to_route('estate.edit', '編集する', ['id' => $bukken->id]) !!}
             </div>
         </div>
         @endforeach

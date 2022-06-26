@@ -84,27 +84,69 @@ class BukkensController extends Controller
         $bukken = Bukken::findOrFail($id);
         // dd($bukken);
         
-        // 認証済みの不動産会社と物件idが同じ場合、詳細ページに遷移する
-        if (Auth::guard('estate')->id() === $bukken->estate_id)
-        {
+        // 認証済みの不動産会社idと物件estate_idが同じ場合、詳細ページに遷移する
+        if (Auth::guard('estate')->id() === $bukken->estate_id) {
             return view('estate.show', [
                 'bukken' => $bukken,
             ]);
-        } else
-        {
+        } else {
             // それ以外は物件管理ページにリダイレクトさせる
             return redirect('/estate');
         }
     }
     
-    public function edit()
+    public function edit($id)
     {
-        // 
+        //  idの物件を取得
+        $bukken = Bukken::findOrFail($id);
+            
+        // 認証済みの不動産会社idと物件のestate_idが同じ場合、修正ページに遷移する
+        if (Auth::guard('estate')->id() === $bukken->estate_id)
+        {
+            return view('estate.edit', [
+                'bukken' => $bukken,
+            ]);
+        } else {
+            // それ以外は物件管理ページにリダイレクトさせる
+            return redirect('/estate');
+        }
     }
     
-    public function apdate()
+    public function update(Request $request, $id)
     {
-        // 
+        // idの物件取得する
+        $bukken = Bukken::findOrFail($id);
+        
+        // バリデーション
+        $request->validate([
+            'name' => 'required|max:255',
+            'kinds' => 'required|max:255',
+            'address' => 'required|max:255',
+            'rent' => 'required|max:255',
+            'management_fee' => 'required|max:255',
+            'floor' => 'required|max:255',
+            'floor_plan' => 'required|max:255',
+            'nearest_station' => 'required|max:255',
+            'age' => 'required|max:255',
+        ]);
+        
+        // 認証済み不動産会社idと物件estate_idが同じ場合、物件情報を更新
+        if (Auth::guard('estate')->id() === $bukken->estate_id) {
+            $bukken->update([
+                $bukken->name = $request->name,
+                $bukken->kinds = $request->kinds,
+                $bukken->address = $request->address,
+                $bukken->rent = $request->rent,
+                $bukken->management_fee => $request->management_fee,
+                $bukken->floor = $request->floor,
+                $bukken->floor_plan = $request->floor_plan,
+                $bukken->nearest_station = $request->nearest_station,
+                $bukken->age = $request->age,
+            ]);
+        }
+    
+        // 物件q管理ページにリダイレクトさせる
+        return redirect('/estate');
     }
     
     public function destroy()
