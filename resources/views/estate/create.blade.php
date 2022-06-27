@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="mx-auto" style="width:800px">
+    <div class="container">
         
         {{-- エラーメッセージ --}}
         @if (count($errors) > 0)

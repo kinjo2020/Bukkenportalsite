@@ -1,7 +1,7 @@
 @extends('layouts.estate.app')
 
 @section('content')
-<div class="mx-auto" style="width:800px">
+<div class="container">
     <h1 class="mb-3 text-center">物件詳細</h1>
     
     <div>
