@@ -28,6 +28,11 @@
                 
                 {{-- 物件情報編集ページへのリンク --}}
                 {!! link_to_route('estate.edit', '編集する', ['id' => $bukken->id]) !!}
+                
+                {{-- 物件削除フォーム --}}
+                {!! Form::model($bukken, ['route' => ['estate.destroy', $bukken->id], 'method' => 'delete']) !!}
+                    {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+                {!! Form::close() !!}
             </div>
         </div>
         @endforeach

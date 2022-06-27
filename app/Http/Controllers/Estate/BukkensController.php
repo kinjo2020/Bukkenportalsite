@@ -149,8 +149,17 @@ class BukkensController extends Controller
         return redirect('/estate');
     }
     
-    public function destroy()
+    public function destroy($id)
     {
-        // 
+        // idの物件を取得
+        $bukken = Bukken::findOrFail($id);
+        
+        // 認証済み不動産会社idと物件estate_idが同じ場合、物件を削除
+        if (Auth::guard('estate')->id() === $bukken->estate_id) {
+            $bukken->delete();
+        }
+        
+        // 物件管理ページにリダイレクトさせる
+        return redirect('/estate');
     }
 }

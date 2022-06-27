@@ -51,6 +51,7 @@ Route::namespace('Estate')->prefix('estate')->name('estate.')->group(function ()
         Route::get('/{id}', 'BukkensController@show')->where('id', '[0-9]+')->name('show');
         Route::get('/{id}/edit', 'BukkensController@edit')->where('id', '[0-9]+')->name('edit');
         Route::put('/{id}', 'BukkensController@update')->where('id', '[0-9]+')->name('update');
+        Route::delete('/{id}', 'BukkensController@destroy')->where('id', '[0-9]+')->name('destroy');
         Route::resource('/', 'BukkensController', ['only' => ['index', 'create', 'store']]);
 
     });
