@@ -29,6 +29,7 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
     Route::middleware('auth:user')->group(function () {
 
         // TOPページ
+        Route::get('/{id}', 'UserController@show')->where('id', '[0-9]+')->name('show');
         Route::resource('/', 'UserController', ['only' => 'index']);
 
     });
