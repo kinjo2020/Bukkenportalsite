@@ -16,4 +16,10 @@ class Bukken extends Model
     {
         return $this->belongsTo(Estate::class);
     }
+    
+    // 物件をお気に入りしたユーザー
+    public function favorite_users()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'bukken_id', 'user_id');
+    }
 }

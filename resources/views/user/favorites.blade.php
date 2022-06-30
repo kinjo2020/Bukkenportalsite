@@ -7,7 +7,7 @@
     
     @if (count($bukkens) > 0)
         @foreach ($bukkens as $bukken)
-            <div class=''>
+            <div class='container'>
                 <div class="card-header d-flex align-items-center">
                     <strong>{{ $bukken->name }}</strong>
                 </div>

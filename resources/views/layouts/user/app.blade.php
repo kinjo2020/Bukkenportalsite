@@ -11,7 +11,7 @@
 
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <nav class="navbar navbar-expand-md navbar-light bg-blue shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
@@ -63,7 +63,20 @@
             </nav>
     
             <main class="py-4">
-                @yield('content')
+                <div class="container mx-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="sidebar-fixed">
+                                @include('user.commons.sidebar')
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            @yield('content')
+                        </div>
+                    </div>
+                    
+                </div>
+                
             </main>
         </div>
 

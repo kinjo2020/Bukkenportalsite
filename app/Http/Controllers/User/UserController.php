@@ -38,4 +38,18 @@ class UserController extends Controller
             'bukken' => $bukken,
         ]);
     }
+    
+    public function favorites()
+    {
+        // 認証済みユーザーを取得
+        $user = Auth::guard('user')->user();
+        
+        // お気に入り登録した物件一覧を作成日時順で取得
+        $favorites = $user->favorites()->orderBy('created_at', 'desc')->get();
+        
+        return view ('user.favorites', [
+            'user' => $user,
+            'bukkens' => $favorites,
+        ]);
+    }
 }

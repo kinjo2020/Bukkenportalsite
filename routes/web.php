@@ -28,9 +28,14 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
     // ログイン認証後
     Route::middleware('auth:user')->group(function () {
 
-        // TOPページ
+        // ユーザーページ
         Route::get('/{id}', 'UserController@show')->where('id', '[0-9]+')->name('show');
         Route::resource('/', 'UserController', ['only' => 'index']);
+        Route::get('/favorites', 'UserController@favorites')->name('bukken.favorites');
+        
+        // 物件お気に入り登録、お気に入り削除
+        Route::post('/{id}/favorite', 'FavoritesController@store')->name('bukken.favorite');
+        Route::delete('/{id}/unfavorite', 'FavoritesController@destroy')->name('bukken.unfavorite');
 
     });
 });
@@ -48,7 +53,7 @@ Route::namespace('Estate')->prefix('estate')->name('estate.')->group(function ()
     // ログイン認証後
     Route::middleware('auth:estate')->group(function () {
 
-        // TOPページ
+        // 不動産会社ページ
         Route::get('/{id}', 'BukkensController@show')->where('id', '[0-9]+')->name('show');
         Route::get('/{id}/edit', 'BukkensController@edit')->where('id', '[0-9]+')->name('edit');
         Route::put('/{id}', 'BukkensController@update')->where('id', '[0-9]+')->name('update');
