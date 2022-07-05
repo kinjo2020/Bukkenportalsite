@@ -25,7 +25,8 @@ class CreateBukkensTable extends Migration
             $table->string('floor_plan');
             $table->string('nearest_station');
             $table->string('age');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
             
             // 外部キー制約
             $table->foreign('estate_id')->references('id')->on('estates');

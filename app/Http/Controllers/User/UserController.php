@@ -32,6 +32,7 @@ class UserController extends Controller
         // 認証済みユーザの場合、idの物件を取得
         if (Auth::guard('user')->check()) {
             $bukken = Bukken::findOrFail($id);
+            Auth::guard('user')->user()->history($id);
         } 
         
         return view('user.show', [
@@ -44,12 +45,25 @@ class UserController extends Controller
         // 認証済みユーザーを取得
         $user = Auth::guard('user')->user();
         
-        // お気に入り登録した物件一覧を作成日時順で取得
-        $favorites = $user->favorites()->orderBy('created_at', 'desc')->get();
+        // お気に入り登録した物件一覧を登録日時順で取得
+        $favorites = $user->favorites()->orderBy('pivot_created_at', 'desc')->get();
         
         return view ('user.favorites', [
             'user' => $user,
             'bukkens' => $favorites,
+        ]);
+    }
+    
+    public function histories()
+    {
+        // 認証済みユーザーを取得
+        $user = Auth::guard('user')->user();
+        
+        // 閲覧済み物件を更新日時順で取得
+        $histories = $user->histories()->orderBy('pivot_updated_at', 'desc')->get();
+        
+        return view('user.histories', [
+            'bukkens' => $histories,
         ]);
     }
 }

@@ -10,29 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -54,8 +39,7 @@ class User extends Authenticatable
             return false;
         } else {
             //上記以外はお気に入り登録
-            $this->favorites()->attach($bukkenId);
-            return true;
+            return $this->favorites()->attach($bukkenId);
         }
     }
     
@@ -67,8 +51,7 @@ class User extends Authenticatable
         
         if ($exist) {
             // お気に入りされている場合は削除
-            $this->favorites()->detach($bukkenId);
-            return true;
+            return $this->favorites()->detach($bukkenId);
         } else {
             // 上記以外はなにもしない
             return false;
@@ -76,8 +59,52 @@ class User extends Authenticatable
     }
     
     // お気に入り中の物件が存在するか
-    public function is_favorite($bukken)
+    public function is_favorite($bukkenId)
     {
-        return $this->favorites()->where('bukken_id', $bukken)->exists();
+        return $this->favorites()->where('bukken_id', $bukkenId)->exists();
+    }
+    
+    // ユーザーが閲覧済み物件
+    public function histories()
+    {
+        return $this->belongsToMany(Bukken::class, 'histories', 'user_id', 'bukken_id')->withTimestamps();
+    }
+    
+    // 物件を閲覧済みに登録、更新
+    public function history($bukkenId)
+    {
+        // すでに閲覧済みか確認
+        $exist = $this->is_history($bukkenId);
+        
+        if ($exist) {
+            // 中間テーブルのbukkenn_idを取得
+            $pivot_id = $this->histories()->where('bukken_id', $bukkenId)->get();
+            // 閲覧済みの場合は中間テーブルを更新
+            return $this->histories()->updateExistingPivot($pivot_id, ['updated_at' => $bukkenId]);
+        } else {
+            // それ以外は閲覧済みにする
+            return $this->histories()->attach($bukkenId);
+        }
+    }
+    
+    // 閲覧済みから削除
+    public function unhistory($bukkenId)
+    {
+        // すでに閲覧済みか確認
+        $exist = $this->is_history($bukkenId);
+        
+        if ($exist) {
+            // 閲覧済みの物件は削除
+            return $this->histories()->detach($bukkenId);
+        } else {
+            // それ以外はなにもしない
+            return false;
+        }
+    }
+    
+    // 閲覧済みの物件が存在しているか
+    public function is_history($bukkenId)
+    {
+        return $this->histories()->where('bukken_id', $bukkenId)->exists();
     }
 }

@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,10 +21,14 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
         Route::get('/{id}', 'UserController@show')->where('id', '[0-9]+')->name('show');
         Route::resource('/', 'UserController', ['only' => 'index']);
         Route::get('/favorites', 'UserController@favorites')->name('bukken.favorites');
+        Route::get('/histories', 'UserController@histories')->name('bukken.histories');
         
         // 物件お気に入り登録、お気に入り削除
         Route::post('/{id}/favorite', 'FavoritesController@store')->name('bukken.favorite');
         Route::delete('/{id}/unfavorite', 'FavoritesController@destroy')->name('bukken.unfavorite');
+        
+        // 物件の閲覧済みを削除
+        Route::delete('/{id}/unhistory', 'HistoriesController@destroy')->name('bukken.unhistory');
 
     });
 });

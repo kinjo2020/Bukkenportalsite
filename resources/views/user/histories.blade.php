@@ -2,7 +2,7 @@
 
 @section('content')
 <div>
-    <h1 class="mb-3 text-center">お気に入り一覧</h1>
+    <h1 class="mb-3 text-center">閲覧済み一覧</h1>
 
     
     @if (count($bukkens) > 0)
@@ -24,8 +24,13 @@
                     {!! link_to_route('user.show', '詳細を見る', ['id' => $bukken->id], ['class' => 'text-right']) !!}
                     
                     <div class="text-right">
-                         {{-- お気に入り登録ボタン、削除ボタン --}}
+                        {{-- お気に入り登録ボタン、削除ボタン --}}
                         @include('user.favorite_button.favorite_button')
+                        
+                        {{-- 閲覧済み削除ボタン --}}
+                        {!! Form::open(['route' => ['user.bukken.unhistory', $bukken->id], 'method' => 'delete']) !!}
+                            {!! Form::submit('閲覧済みから削除', ['class' => "btn btn-secondary mt-1"]) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

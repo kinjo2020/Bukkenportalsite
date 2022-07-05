@@ -6,6 +6,6 @@
 @else
     {{-- お気に入り登録ボタン --}}
     {!! Form::open(['route' => ['user.bukken.favorite', $bukken->id]]) !!}
-        {!! Form::submit('お気に入り登録', ['class' => "btn btn-primary justify-content-end"]) !!}
+        {!! Form::submit('お気に入り登録', ['class' => "btn btn-primary"]) !!}
     {!! Form::close() !!}
 @endif
