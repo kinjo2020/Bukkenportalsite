@@ -52,6 +52,9 @@ Route::namespace('Estate')->prefix('estate')->name('estate.')->group(function ()
         Route::put('/{id}', 'BukkensController@update')->where('id', '[0-9]+')->name('update');
         Route::delete('/{id}', 'BukkensController@destroy')->where('id', '[0-9]+')->name('destroy');
         Route::resource('/', 'BukkensController', ['only' => ['index', 'create', 'store']]);
+        
+        // 物件画像の削除
+        Route::delete('/{id}/picture_delete', 'PicturesController@destroy')->where('id', '[0-9]')->name('picture.destroy');
 
     });
 

@@ -17,6 +17,12 @@ class Bukken extends Model
         return $this->belongsTo(Estate::class);
     }
     
+    // 物件の画像
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
+    }
+    
     // 物件をお気に入りしたユーザー
     public function favorite_users()
     {

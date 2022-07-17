@@ -8,6 +8,11 @@
         <div class="card-header d-flex align-items-center">
             <strong>{{ $bukken->name }}</strong>
         </div>
+        @if (count($pictures) > 0)
+            @foreach ($pictures as $picture)
+                <img src="{{ asset($picture->image_path) }}" alt="物件画像">
+            @endforeach
+        @endif
         <div class="card-body">
             <p>{{ $bukken->kinds }}</p>
             <p>賃料：{{ $bukken->rent }} 円</p>

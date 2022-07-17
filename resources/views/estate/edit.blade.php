@@ -17,7 +17,7 @@
     
         <div>
             <div>
-                {!! Form::model($bukken, ['route' => ['estate.update', $bukken->id], 'method' => 'put' ]) !!}
+                {!! Form::model($bukken, ['route' => ['estate.update', $bukken->id], 'enctype' => 'multipart/form-data', 'method' => 'put' ]) !!}
     
                     <div class="form-group">
                         {!! Form::label('name', '物件名:') !!}
@@ -46,6 +46,9 @@
                         
                         {!! Form::label('age', '築年数:') !!}
                         {!! Form::text('age', $bukken->age, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('picture', '物件画像:') !!}
+                        {!! Form::file('picture') !!}
                     </div>
     
                     {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
@@ -53,5 +56,17 @@
                 {!! Form::close() !!}
             </div>
         </div>
+        
+        @if (count($pictures) > 0)
+            @foreach ($pictures as $picture)
+                <img src="{{ asset($picture->image_path) }}" alt="物件画像">
+                
+                {{-- 物件画像削除フォーム --}}
+                {!! Form::model($picture, ['route' => ['estate.picture.destroy', $picture->id], 'method' => 'delete']) !!}
+                    {!! Form::submit('画像削除', ['class' => 'btn btn-danger']) !!}
+                {!! Form::close() !!}
+            @endforeach
+        @endif
+        
     </div>
 @endsection

@@ -17,7 +17,7 @@
     
         <div>
             <div>
-                {!! Form::model($bukken, ['route' => 'estate.store']) !!}
+                {!! Form::model($bukken, ['route' => 'estate.store', 'enctype' => 'multipart/form-data']) !!}
     
                     <div class="form-group">
                         {!! Form::label('name', '物件名:') !!}
@@ -46,6 +46,9 @@
                         
                         {!! Form::label('age', '築年数:') !!}
                         {!! Form::text('age', null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::label('picture', '物件画像:') !!}
+                        {!! Form::file('picture') !!}
                     </div>
     
                     {!! Form::submit('作成', ['class' => 'btn btn-primary']) !!}

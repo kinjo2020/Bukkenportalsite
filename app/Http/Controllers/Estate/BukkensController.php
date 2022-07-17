@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Estate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Bukken;
+use App\Picture;
 
 class BukkensController extends Controller
 {
@@ -28,9 +30,13 @@ class BukkensController extends Controller
             // 不動産会社の物件を作成日時の降順で作成
             $bukkens = $estate->bukkens()->orderBy('created_at', 'desc')->get();
             
+            // 画像をすべて取得
+            $pictures = Picture::all();
+            
             $data = [
                 'estate' => $estate,
                 'bukkens' => $bukkens,
+                'pictures' => $pictures,
             ];
         }
         
@@ -59,10 +65,11 @@ class BukkensController extends Controller
             'floor_plan' => 'required|max:255',
             'nearest_station' => 'required|max:255',
             'age' => 'required|max:255',
+            'picture' => 'file|mimes:jpeg,png,jpg,bmb|max:2048',
         ]);
 
         // 認証済み不動産会社の物件として作成（リクエストされた値をもとに作成）
-        $request->user()->bukkens()->create([
+        $new_bukken = $request->user()->bukkens()->create([
             'name' => $request->name,
             'kinds' => $request->kinds,
             'address' => $request->address,
@@ -73,6 +80,19 @@ class BukkensController extends Controller
             'nearest_station' => $request->nearest_station,
             'age' => $request->age,
         ]);
+        
+        $picture = new Picture;
+        
+        // s3へアップロード開始
+        $image = $request->file('picture');
+        // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
+        $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
+        
+        // 作成した物件の物件画像をテーブルに保存
+        $picture->create([
+            'bukken_id' => $new_bukken->id,
+            'image_path' => Storage::disk('s3')->url($path),
+        ]);
 
         // 物件管理ページへリダイレクトさせる
         return redirect('/estate');
@@ -82,12 +102,14 @@ class BukkensController extends Controller
     {
         // idの物件を取得
         $bukken = Bukken::findOrFail($id);
-        // dd($bukken);
+        // idのの物件画像を取得
+        $pictures = Picture::where('bukken_id', $id)->get();
         
         // 認証済みの不動産会社idと物件estate_idが同じ場合、詳細ページに遷移する
         if (Auth::guard('estate')->id() === $bukken->estate_id) {
             return view('estate.show', [
                 'bukken' => $bukken,
+                'pictures' => $pictures,
             ]);
         } else {
             // それ以外は物件管理ページにリダイレクトさせる
@@ -99,12 +121,14 @@ class BukkensController extends Controller
     {
         //  idの物件を取得
         $bukken = Bukken::findOrFail($id);
-            
+        // bukken_idが物件のidと同じ物件画像を取得
+        $pictures = Picture::where('bukken_id', $id)->get();
+          
         // 認証済みの不動産会社idと物件のestate_idが同じ場合、修正ページに遷移する
-        if (Auth::guard('estate')->id() === $bukken->estate_id)
-        {
+        if (Auth::guard('estate')->id() === $bukken->estate_id) {
             return view('estate.edit', [
                 'bukken' => $bukken,
+                'pictures' => $pictures,
             ]);
         } else {
             // それ以外は物件管理ページにリダイレクトさせる
@@ -128,6 +152,7 @@ class BukkensController extends Controller
             'floor_plan' => 'required|max:255',
             'nearest_station' => 'required|max:255',
             'age' => 'required|max:255',
+            'picture' => 'file|mimes:jpeg,png,jpg,bmb|max:2048',
         ]);
         
         // 認証済み不動産会社idと物件estate_idが同じ場合、物件情報を更新
@@ -143,6 +168,20 @@ class BukkensController extends Controller
                 $bukken->nearest_station = $request->nearest_station,
                 $bukken->age = $request->age,
             ]);
+            
+            $picture = new Picture;
+            
+            // s3へアップロード開始
+            $image = $request->file('picture');
+            // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
+            $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
+            
+            // 作成した物件の物件画像をテーブルに保存
+            $picture->create([
+                'bukken_id' => $bukken->id,
+                'image_path' => Storage::disk('s3')->url($path),
+            ]);
+            
         }
     
         // 物件q管理ページにリダイレクトさせる

@@ -19,6 +19,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-10">
+                            @if (count($pictures) > 0)
+                                @foreach ($pictures as $picture)
+                                    @if ($picture->bukken_id === $bukken->id)
+                                        <img src="{{ asset($picture->image_path) }}" alt="物件画像">
+                                    @endif
+                                @endforeach
+                            @endif
                             <p>{{ $bukken->kinds }}</p>
                             <p>賃料：{{ $bukken->rent }} 円</p>
                             <p>管理費:{{ $bukken->management_fee }} 円</p>
