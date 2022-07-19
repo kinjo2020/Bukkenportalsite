@@ -17,24 +17,30 @@ class BukkensController extends Controller
         $this->middleware('auth:estate');
     }
     
-    public function index()
+    public function index(Request $request)
     {
         $data = [];
+        $keyword = $request->search;
         
         // 認証済み不動産会社のみ
         if (Auth::guard('estate')->check())
         {
-            // 認証済み不動産会社を取得
-            $estate = Auth::guard('estate')->user();
-            
-            // 不動産会社の物件を作成日時の降順で作成
-            $bukkens = $estate->bukkens()->orderBy('created_at', 'desc')->get();
+            // キーワード存在する場合、$keywordの部分一致で物件取得
+            if ($keyword) {
+                // 認証済み不動産会社を取得
+                $estate = Auth::guard('estate')->user();
+                // 不動産会社の物件を作成日時の降順で作成
+                $bukkens = $estate->bukkens()->where('address', 'like', '%'.$keyword.'%')->orderBy('created_at', 'desc')->get();
+                
+            // それ以外、物件をすべて取得 
+            } else {
+                $bukkens = Bukken::all();
+            }
             
             // 画像をすべて取得
             $pictures = Picture::all();
             
             $data = [
-                'estate' => $estate,
                 'bukkens' => $bukkens,
                 'pictures' => $pictures,
             ];

@@ -3,7 +3,21 @@
 @section('content')
 <div>
     <h1 class="mb-3 text-center">物件一覧</h1>
-
+    
+    {{-- キーワード検索 --}}
+    <form method="GET" action="{{ route('user.index') }}">
+        <div class="input-group my-3">
+            <input type="search" class="form-control" placeholder="都道府県名・市区郡名で検索" name="search" value="@if (isset($search)) {{ $search }} @endif">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">検索</button>
+                <button class="btn btn-secondary">
+                    <a href="{{ route('user.index') }}" class="text-white">
+                        クリア
+                    </a>
+                </button>
+            </span>
+        </div>
+    </form>
     
     @if (count($bukkens) > 0)
         @foreach ($bukkens as $bukken)

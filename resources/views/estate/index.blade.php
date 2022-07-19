@@ -4,10 +4,26 @@
 <div>
     <div class="container">
         <h1 class="mb-3 text-center">物件管理</h1>
+        
         <div class="mb-2 d-flex justify-content-end">
             {{-- 新規物件作成リンク --}}
             {!! link_to_route('estate.create', '新規物件作成', [], ['class' => 'btn btn-primary']) !!}
         </div>
+        
+        {{-- キーワード検索 --}}
+        <form method="GET" action="{{ route('estate.index') }}">
+            <div class="input-group my-3">
+                <input type="search" class="form-control" placeholder="都道府県名・市区郡名で検索" name="search" value="@if (isset($search)) {{ $search }} @endif">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">検索</button>
+                    <button class="btn btn-secondary">
+                        <a href="{{ route('estate.index') }}" class="text-white">
+                            クリア
+                        </a>
+                    </button>
+                </span>
+            </div>
+        </form>
     </div>
     
     @if (count($bukkens) > 0)

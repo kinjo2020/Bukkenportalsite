@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Bukken;
 use App\Picture;
@@ -16,12 +17,24 @@ class UserController extends Controller
         $this->middleware('auth:user');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        // 認証済みユーザの場合、物件と物件画像をすべて取得
+        $keyword = $request->search;
+        
+        // 認証済みユーザの場合
         if (Auth::guard('user')->check()) {
+            // キーワード存在する場合、$keywordの部分一致で物件取得
+            if ($keyword) {
+                $bukkens = DB::table('bukkens')
+                    ->where('address', 'like', '%'.$keyword.'%')
+                    ->get();
+            // それ以外、物件をすべて取得 
+            } else {
                 $bukkens = Bukken::all();
-                $pictures = Picture::all();
+            }
+            
+            // 物件画像をすべて取得
+            $pictures = Picture::all();
         };
         
         return view('user.index', [
