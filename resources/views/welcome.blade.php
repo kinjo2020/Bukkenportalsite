@@ -39,9 +39,6 @@
                             {!! link_to_route('estate.index', '物件を掲載する', [], ['class' => 'btn btn-lg btn-primary']) !!}
                         </div>
                     </div>
-                    
-                    
-                    
                 </div>
             </main>
         </div>
