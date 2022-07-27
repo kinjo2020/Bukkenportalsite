@@ -29,6 +29,11 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
         
         // 物件の閲覧済みを削除
         Route::delete('/{id}/unhistory', 'HistoriesController@destroy')->name('bukken.unhistory');
+        
+        // 物件問い合わせ入力、確認、完了画面
+        Route::get('/{id}/contact/input', 'ContactController@input')->name('contact.input');
+        Route::post('/{id}/contact/confirm', 'ContactController@confirm')->name('contact.confirm');
+        Route::post('/{id}/contact/finish', 'ContactController@send')->name('contact.send');
 
     });
 });

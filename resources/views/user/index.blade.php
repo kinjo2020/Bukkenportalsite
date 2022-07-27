@@ -42,10 +42,15 @@
                     <p>最寄り駅：{{ $bukken->nearest_station }}</p>
                     
                     {{-- 物件詳細ページへのリンク --}}
-                    {!! link_to_route('user.show', '詳細を見る', ['id' => $bukken->id], ['class' => 'text-right']) !!}
+                    {!! link_to_route('user.show', '詳細を見る', ['id' => $bukken->id]) !!}
                     
                     <div class="text-right">
-                         {{-- お気に入り登録ボタン、削除ボタン --}}
+                        {{-- 物件お問い合わせ --}}
+                        <div class="btn btn-success">
+                            {!! link_to_route('user.contact.input', 'この物件に問い合わせる', ['id' => $bukken->id], ['class' => 'text-white']) !!}
+                        </div>
+                        
+                        {{-- お気に入り登録ボタン、削除ボタン --}}
                         @include('user.favorite_button.favorite_button')
                     </div>
                 </div>

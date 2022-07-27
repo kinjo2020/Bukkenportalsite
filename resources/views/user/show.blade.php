@@ -23,6 +23,16 @@
             <p>築年数:{{ $bukken->age }} 年</p>
             <p>住所：{{ $bukken->address }}</p>
             <p>最寄り駅：{{ $bukken->nearest_station }}</p>
+            
+            <div class="text-right">
+                {{-- 物件お問い合わせ --}}
+                <div class="btn btn-success">
+                    {!! link_to_route('user.contact.input', 'この物件に問い合わせる', ['id' => $bukken->id], ['class' => 'text-white']) !!}
+                </div>
+                
+                {{-- お気に入り登録ボタン、削除ボタン --}}
+                @include('user.favorite_button.favorite_button')
+            </div>
         </div>
     </div>
 </div>
