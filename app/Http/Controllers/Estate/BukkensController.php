@@ -32,9 +32,11 @@ class BukkensController extends Controller
                 // 不動産会社の物件を作成日時の降順で作成
                 $bukkens = $estate->bukkens()->where('address', 'like', '%'.$keyword.'%')->orderBy('created_at', 'desc')->get();
                 
-            // それ以外、物件をすべて取得 
             } else {
-                $bukkens = Bukken::all();
+                // 認証済み不動産会社を取得
+                $estate = Auth::guard('estate')->user();
+                // 不動産会社自身の物件のみ取得 
+                $bukkens = $estate->bukkens()->where('estate_id', $estate->id)->orderBy('created_at', 'desc')->get();
             }
             
             // 画像をすべて取得
