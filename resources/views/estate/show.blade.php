@@ -23,5 +23,10 @@
             <p>最寄り駅：{{ $bukken->nearest_station }}</p>
         </div>
     </div>
+    
+    <div class="text-center py-5 my-5">
+        {!! link_to_route('estate.index', 'ホームへ', [], ['class' => 'btn btn-primary']) !!}
+    </div>
+    
 </div>
 @endsection

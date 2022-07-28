@@ -51,7 +51,11 @@
                         {!! Form::file('picture') !!}
                     </div>
     
-                    {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+                    <div class="text-center py-5 my-5">
+                        {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+                        {!! link_to_route('estate.index', 'キャンセル', [], ['class' => 'btn btn-danger mx-5']) !!}
+                    </div>
+                    
     
                 {!! Form::close() !!}
             </div>

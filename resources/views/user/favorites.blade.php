@@ -39,5 +39,10 @@
         
         @endforeach
     @endif
+    
+    <div class="text-center py-5 my-5">
+        {!! link_to_route('user.index', 'ホームへ', [], ['class' => 'btn btn-primary']) !!}
+    </div>
+    
 </div>
 @endsection
