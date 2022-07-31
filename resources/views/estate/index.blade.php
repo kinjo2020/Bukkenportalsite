@@ -3,6 +3,7 @@
 @section('content')
 <div>
     <div class="container">
+        
         <h1 class="mb-3 text-center">物件管理</h1>
         
         <div class="mb-2 d-flex justify-content-end">
@@ -24,11 +25,10 @@
                 </span>
             </div>
         </form>
-    </div>
     
     @if (count($bukkens) > 0)
         @foreach ($bukkens as $bukken)
-            <div class='container'>
+            <div class='border my-3'>
                 <div class="card-header d-flex align-items-center">
                     <strong>{{ $bukken->name }}</strong>
                 </div>
@@ -70,5 +70,6 @@
             </div>
         @endforeach
     @endif
+    </div>
 </div>
 @endsection

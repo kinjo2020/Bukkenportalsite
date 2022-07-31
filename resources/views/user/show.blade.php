@@ -4,11 +4,11 @@
 <div class="container">
     <h1 class="mb-3 text-center">物件詳細</h1>
     
-    <div>
+    <div class='border my-3'>
         <div class="card-header d-flex align-items-center">
             <strong>{{ $bukken->name }}</strong>
         </div>
-        <div class="card-body">
+        <div class="card-body pb-0">
             @if (count($pictures) > 0)
                 @foreach ($pictures as $picture)
                     @if ($picture->bukken_id === $bukken->id)
@@ -24,7 +24,7 @@
             <p>住所：{{ $bukken->address }}</p>
             <p>最寄り駅：{{ $bukken->nearest_station }}</p>
             
-            <div class="text-right">
+            <div class="d-flex justify-content-around mx-5 my-3 px-5">
                 {{-- 物件お問い合わせ --}}
                 <div class="btn btn-success">
                     {!! link_to_route('user.contact.input', 'この物件に問い合わせる', ['id' => $bukken->id], ['class' => 'text-white']) !!}
