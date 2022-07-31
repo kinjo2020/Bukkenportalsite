@@ -31,11 +31,11 @@
                             <!-- Authentication Links -->
                             @unless (Auth::guard('estate')->check())
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('estate.login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('estate.login') }}">{{ __('ログイン') }}</a>
                                 </li>
                                 @if (Route::has('estate.register'))
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('estate.register') }}">{{ __('Register') }}</a>
+                                        <a class="nav-link" href="{{ route('estate.register') }}">{{ __('新規登録') }}</a>
                                     </li>
                                 @endif
                             @else
@@ -48,7 +48,7 @@
                                         <a class="dropdown-item" href="{{ route('estate.logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            {{ __('ログアウト') }}
                                         </a>
     
                                         <form id="logout-form" action="{{ route('estate.logout') }}" method="POST" style="display: none;">
