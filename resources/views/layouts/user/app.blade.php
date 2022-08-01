@@ -63,17 +63,21 @@
             </nav>
     
             <main class="py-4">
-                <div class="container mx-4">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="sidebar-fixed">
+                <div class="container">
+                     @if (Auth::check())
+                        <div class="row">
+                            <div class="col-2 border-right">
+                                {{-- サイドバー --}}
                                 @include('user.commons.sidebar')
                             </div>
+                            <div class="col-10">
+                                {{-- メイン --}}
+                                @yield('content')
+                            </div>
                         </div>
-                        <div class="col-9">
-                            @yield('content')
-                        </div>
-                    </div>
+                    @else
+                        @yield('content')
+                    @endif
                     
                 </div>
                 
