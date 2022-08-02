@@ -48,7 +48,7 @@
                         {!! Form::text('age', $bukken->age, ['class' => 'form-control']) !!}
                         
                         {!! Form::label('picture', '物件画像:') !!}
-                        {!! Form::file('picture') !!}
+                        {!! Form::file('picture', ['class' => 'd-block']) !!}
                     </div>
     
                     <div class="text-center py-5 my-5">
@@ -61,16 +61,21 @@
             </div>
         </div>
         
-        @if (count($pictures) > 0)
-            @foreach ($pictures as $picture)
-                <img src="{{ asset($picture->image_path) }}" alt="物件画像">
-                
-                {{-- 物件画像削除フォーム --}}
-                {!! Form::model($picture, ['route' => ['estate.picture.destroy', $picture->id], 'method' => 'delete']) !!}
-                    {!! Form::submit('画像削除', ['class' => 'btn btn-danger']) !!}
-                {!! Form::close() !!}
-            @endforeach
-        @endif
+        <div class="row">
+            @if (count($pictures) > 0)
+                @foreach ($pictures as $picture)
+                    <div class="m-3">
+                        <img src="{{ asset($picture->image_path) }}" alt="物件画像">
+                        
+                        {{-- 物件画像削除フォーム --}}
+                        {!! Form::model($picture, ['route' => ['estate.picture.destroy', $picture->id], 'method' => 'delete']) !!}
+                            {!! Form::submit('画像削除', ['class' => 'my-1 btn btn-danger']) !!}
+                        {!! Form::close() !!}
+                    </div>
+                    
+                @endforeach
+            @endif
+        </div>
         
     </div>
 @endsection

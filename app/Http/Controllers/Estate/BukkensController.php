@@ -91,16 +91,18 @@ class BukkensController extends Controller
         
         $picture = new Picture;
         
-        // s3へアップロード開始
         $image = $request->file('picture');
-        // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
-        $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
         
-        // 作成した物件の物件画像をテーブルに保存
-        $picture->create([
-            'bukken_id' => $new_bukken->id,
-            'image_path' => Storage::disk('s3')->url($path),
-        ]);
+        if (!empty($image)) {
+            // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
+            $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
+            
+            // 作成した物件の物件画像をテーブルに保存
+            $picture->create([
+                'bukken_id' => $new_bukken->id,
+                'image_path' => Storage::disk('s3')->url($path),
+            ]);
+        }
 
         // 物件管理ページへリダイレクトさせる
         return redirect('/estate');
@@ -179,16 +181,22 @@ class BukkensController extends Controller
             
             $picture = new Picture;
             
-            // s3へアップロード開始
             $image = $request->file('picture');
-            // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
-            $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
             
-            // 作成した物件の物件画像をテーブルに保存
-            $picture->create([
-                'bukken_id' => $bukken->id,
-                'image_path' => Storage::disk('s3')->url($path),
-            ]);
+            // 画像が添付されている場合
+            if (!empty($image)) {
+                // バケットのkinjotakumi-bukkenportalsiteフォルダへアップロード
+                $path = Storage::disk('s3')->putFile('kinjotakumi-bukkenportalsite', $image, 'public');
+                
+                // 作成した物件の物件画像をテーブルに保存
+                $picture->create([
+                    'bukken_id' => $bukken->id,
+                    'image_path' => Storage::disk('s3')->url($path),
+                ]);
+            }
+            
+            
+            
             
         }
     
