@@ -43,6 +43,7 @@ class BukkensController extends Controller
             $pictures = Picture::all();
             
             $data = [
+                'search' => $keyword,
                 'bukkens' => $bukkens,
                 'pictures' => $pictures,
             ];
@@ -194,10 +195,6 @@ class BukkensController extends Controller
                     'image_path' => Storage::disk('s3')->url($path),
                 ]);
             }
-            
-            
-            
-            
         }
     
         // 物件q管理ページにリダイレクトさせる

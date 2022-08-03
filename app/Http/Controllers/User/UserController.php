@@ -38,6 +38,7 @@ class UserController extends Controller
         };
         
         return view('user.index', [
+            'search' => $keyword,
             'bukkens' => $bukkens,
             'pictures' => $pictures,
         ]);
