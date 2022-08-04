@@ -1,7 +1,7 @@
 @extends('layouts.user.app')
  
 @section('content')
-<h1>物件お問い合わせ（入力）</h1>
+<h1 class="text-center">物件お問い合わせ（入力）</h1>
 
 <form method="POST" action="{{ route('user.contact.confirm', $bukken->id) }}">
     @csrf
@@ -26,9 +26,11 @@
             <p class="error-message">{{ $errors->first('body') }}</p>
         @endif
     
-        <button class="btn btn-primary" type="submit">
-            入力内容確認
-        </button>
+        <div class="d-flex justify-content-center mx-5 my-3 px-5">
+            <button class="btn btn-primary" type="submit">
+                入力内容確認
+            </button>
+        </div>
     </div>
     
 </form>
