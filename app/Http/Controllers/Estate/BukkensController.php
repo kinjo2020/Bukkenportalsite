@@ -173,7 +173,7 @@ class BukkensController extends Controller
                 $bukken->kinds = $request->kinds,
                 $bukken->address = $request->address,
                 $bukken->rent = $request->rent,
-                $bukken->management_fee => $request->management_fee,
+                $bukken->management_fee = $request->management_fee,
                 $bukken->floor = $request->floor,
                 $bukken->floor_plan = $request->floor_plan,
                 $bukken->nearest_station = $request->nearest_station,
